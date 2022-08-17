@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import Header from "./components/Header";
+import SignUp from "./components/SignUp";
+import PageNotFound from "./components/PageError";
+import "./components/main.css";
+import ErrorBoundary from "./components/ErrorBoundary";
+import Details from "./components/Details";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  render() {
+    const clientId = "1055710802424-gsvuc291j0lopunlq8io2u3mqv8fn7p1.apps.googleusercontent.com";
+    return (
+      <div>
+        <ErrorBoundary>
+          <BrowserRouter>
+            <Header />
+
+            <Routes>
+                  <Route path="/signup" element={<SignUp clientId={clientId}/>} />
+              <Route path="/details/:id" element={<Details />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/*" element={<PageNotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </ErrorBoundary>
+      </div>
+    );
+  }
 }
 
 export default App;
