@@ -4,13 +4,12 @@ import axios from "axios";
 import { MenuItem,FormControl,InputLabel,Select } from "@mui/material";
 import { withStyles } from "@material-ui/core/styles";
 
-// const styles = () => ({
-//     root:{
-//       backgroundColor : "skyblue",
-//       color: "black",
-//       marginLeft : "90px",
-//       marginTop : "5px"
-//     }})
+const styles = () => ({
+    root:{
+        width : "300%",
+         height: "50px",
+         border : "lightblue"
+    }})
 
 class Sorting extends React.Component{
 
@@ -47,10 +46,10 @@ class Sorting extends React.Component{
 
     render(){
 
-        // const { classes } = this.props;
+        const {classes} = this.props;
     return(
     <div>
-     <FormControl sx={{width:"200%",height:"50px",border:"lightblue"}}>
+     <FormControl className={classes.root}>
         <InputLabel id="select-label">SortBy</InputLabel>
         <Select
          labelId="select-label"
@@ -60,9 +59,9 @@ class Sorting extends React.Component{
           onChange={this.handleChange}
           variant="filled"
         >
-          <MenuItem value="release-date">release_date</MenuItem>
-          <MenuItem value="alphabetical">alphabetical(A-Z)</MenuItem>
-          <MenuItem value="popularity">popularity</MenuItem>
+          <MenuItem value="release-date">Date of Release</MenuItem>
+          <MenuItem value="alphabetical">Alphabetical(A-Z)</MenuItem>
+          <MenuItem value="popularity">Popularity</MenuItem>
         </Select>
       </FormControl>
     </div>
@@ -72,4 +71,4 @@ class Sorting extends React.Component{
   }
 
 
-export default Sorting
+export default withStyles(styles)(Sorting)

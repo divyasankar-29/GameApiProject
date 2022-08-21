@@ -4,7 +4,7 @@ import SearchGame from "./SearchGame";
 import Sorting from "./Sorting";
 import Display from "./Display";
 import Filter from "./Filter";
-import { Grid,Box } from "@mui/material";
+import { Grid} from "@mui/material";
 
 function Home(){
 
@@ -40,6 +40,9 @@ function Home(){
       if(response.data) {
         setLoading(false);
       }
+      else{
+        alert(`Could not fetch data!`)
+      }
     })
     .catch((error) => console.log(error.name));
   },[])
@@ -58,7 +61,7 @@ function Home(){
               finalItems={finalItems} 
               setFinalItems={setFinalItems} 
            />
-           <Grid container wrap="wrap" justifyContent="center" spacing={2} sx={{marginTop:"10px",xs:3}} >
+           <Grid container wrap="wrap" justifyContent="center" spacing={2} sx={{marginTop:"10px"}} >
            <Filter filterOptions={filterOptions} items= {items} setFinalItems={setFinalItems} />
             <Sorting setFinalItems={setFinalItems}/>
           </Grid>

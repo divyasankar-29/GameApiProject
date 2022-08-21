@@ -1,6 +1,6 @@
 import React ,{useEffect} from "react";
 
-function SearchGame({query,setQuery,items,setItems,finalItems,setFinalItems}){
+function SearchGame({query,setQuery,items,setFinalItems}){
 
     useEffect(() => {
         setFinalItems([...items.filter((y) => 

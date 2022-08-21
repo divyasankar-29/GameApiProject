@@ -12,7 +12,11 @@ class AddPagination extends React.Component{
     render(){
         return(
             <Stack spacing={1}>
-                <Pagination variant="contained" color="secondary" count={this.props.count} onChange={this.changeHandler} sx={{alignSelf:"center"}} />   
+                <Pagination variant="contained" 
+                color="secondary" 
+                count={this.props.count} 
+                onChange={this.changeHandler} 
+                sx={{alignSelf:"center"}} />   
             </Stack>
         )
     }

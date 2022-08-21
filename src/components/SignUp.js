@@ -1,7 +1,7 @@
 import React from "react";
-import {FormControlLabel,Radio,RadioGroup,TextField,Button,Typography,Box,Grid} from "@mui/material";
+import {FormControl,TextField,Button,Grid, InputLabel, Select, MenuItem} from "@mui/material";
 import {Link} from "react-router-dom";
-import Login from "./Login";
+// import Login from "./Login";
 import { gapi } from "gapi-script";
 
 class SignUp extends React.Component{
@@ -32,14 +32,15 @@ class SignUp extends React.Component{
         const {name,value} = event.target;
         let invalid = {...this.state.invalid}
 
-        switch(name){
+      if(value){
+       switch(name){
           case "firstname":
-            invalid.firstname = value.length>3&&(/^[a-zA-Z]+$/.test(value))? "":"Firstname should be alphabetic & 3 characters long "
+            invalid.firstname = value.length>3&& value.length<20&& (/^[a-zA-Z]+$/.test(value))? "":"Firstname should be alphabetic & 3-20 characters long "
 
           break;
 
           case "lastname":
-            invalid.lastname = value.length>3 &&(/^[a-zA-Z]+$/.test(value))? "":"Lastname should be alphabetic & 3 characters long"
+            invalid.lastname = value.length>3&& value.length<20 &&(/^[a-zA-Z]+$/.test(value))? "":"Lastname should be alphabetic & 3-20 characters long"
 
           break;
 
@@ -51,7 +52,7 @@ class SignUp extends React.Component{
           case "mobileNumber":
             invalid.mobileNumber = value.length===10 &&(/^[0-9]+$/.test(value))? "":"Enter a 10 digit number"
 
-          break
+          break;
 
           case "password":
             invalid.password = value.length>=6 ? "":"Password should be 6 characters long"
@@ -60,9 +61,10 @@ class SignUp extends React.Component{
 
           default : break;
         }
+      }
         this.setState({
-          invalid,
-          [name] : value
+          [name] : value,
+          invalid
         });
 
         if(this.state.firstname && this.state.lastname && this.state.gender
@@ -73,7 +75,7 @@ class SignUp extends React.Component{
         }
             
       };
-      
+  
       componentDidMount(){
         function start(){
           gapi.client.init({
@@ -83,88 +85,116 @@ class SignUp extends React.Component{
         };
         gapi.load('client:auth2',start);
       }
-      render() {
+
+      handleClick(){
+        this.props.setSignIn(true)
+      };
+
+      render(){
         
         return (
           <div>
             <Grid container sx={{marginLeft:"40%",marginBottom:"20px"}} xs={4} alignItems="center" fullWidth >
             <form autoComplete="off">
-            <Typography sx={{marginTop:"20px"}}>  First Name</Typography>
-              <TextField required label="firstname" 
+            {/* <Typography sx={{marginTop:"20px"}}>  First Name</Typography> */}
+              <TextField required label="First Name"
               type="text"
               color="secondary" 
               variant="filled" 
               name="firstname" 
               value={this.state.firstname}
               onChange = {this.handleChange}
+              sx={{marginTop:"20px"}}
               />
               <p style={{color:"red",fontSize:"small"}}>{this.state.invalid.firstname}</p>
           
-            <Typography sx={{marginTop:"30px"}}>  Last Name</Typography>
-              <TextField required label="lastname"
+            {/* <Typography sx={{marginTop:"30px"}}>  Last Name</Typography> */}
+              <TextField required label="Last Name"
               type="text" 
               color="secondary" 
               variant="filled"
               name="lastname" 
               value={this.state.lastname}
               onChange = {this.handleChange}
-               />
+              sx={{marginTop:"30px"}}/>
               <p style={{color:"red",fontSize:"small"}}>{this.state.invalid.lastname}</p>
              
-            <Typography sx={{marginTop:"30px"}}> Email </Typography>
-              <TextField required label="xyz@gmail.com" 
+            {/* <Typography sx={{marginTop:"30px"}}> Email </Typography> */}
+              <TextField required label="E-mail" 
               type="email"
               color="secondary" 
               variant="filled"
               name="emailid" 
               value={this.state.emailid}
-              onChange = {this.handleChange} />
+              onChange = {this.handleChange} 
+              sx={{marginTop:"30px"}}/>
                <p style={{color:"red",fontSize:"small"}}>{this.state.invalid.emailid}</p>
+               <br />
               
-            <Typography sx={{marginTop:"30px"}}> Gender </Typography>
+            {/* <Typography sx={{marginTop:"30px"}}> Gender </Typography>
               <RadioGroup 
+              required
               name="gender"
               value={this.state.gender}
               onChange={this.handleChange}
-              row >
-                <FormControlLabel key="male" value="male"  control={<Radio size="small"/>}  label="Male"/>
-                <FormControlLabel key ="female" value="female"  control={<Radio size="small"/>}  label="Female"/>
-              </RadioGroup>
+              row > */}
+                {/* <FormControlLabel key="male" value="male"  control={<Radio size="small"/>}  label="Male"/>
+                <FormControlLabel key ="female" value="female"  control={<Radio size="small"/>}  label="Female"/> */}
+              {/* </RadioGroup> */}
+              <FormControl required>
+                <InputLabel >Gender</InputLabel>
+                <Select
+                  name="gender"
+                  value={this.state.gender}
+                  label="Gender"
+                  onChange={this.handleChange}
+                  variant="filled"
+                  sx={{marginTop:"10px",width:"240px"}}
+                >
+                  <MenuItem value="male">Male</MenuItem>
+                  <MenuItem value="female">Female</MenuItem>
+                </Select>
+              </FormControl>
+
+              <br />
               
-            <Typography sx={{marginTop:"30px"}}> Mobile Number </Typography>
-              <TextField required label="mobile" 
+            {/* <Typography sx={{marginTop:"30px"}}> Mobile Number </Typography> */}
+              <TextField required label="Mobile Number" 
               type="phone"
               color="secondary"
               variant="filled"
               name="mobileNumber" 
               value={this.state.mobileNumber}
-              onChange = {this.handleChange} />
+              onChange = {this.handleChange} 
+              sx={{marginTop:"30px"}}/>
               <p style={{color:"red",fontSize:"small"}}>{this.state.invalid.mobileNumber}</p>
              
-            <Typography sx={{marginTop:"30px"}}> Password </Typography>
-              <TextField required label="password" 
+            {/* <Typography sx={{marginTop:"30px"}}> Password </Typography> */}
+              <TextField required label="Password" 
               type="password"
               color="secondary" 
               variant="filled" 
               name="password" 
               value={this.state.password}
               onChange = {this.handleChange}
-              fullWidth/>
+              sx={{marginTop:"30px"}}/>
               <p style={{color:"red",fontSize:"small"}}>{this.state.invalid.password}</p>
              {this.state.toggle?
-             (<Link to="/">
-              <Button type="submit" variant="contained" sx={{marginTop:"20px"}}>Click to submit</Button>
-            </Link>) : 
+             (<Link to="/home">
+              <Button type="submit" variant="contained" onClick={this.props.setLogin(true)} sx={{marginTop:"20px"}}>Click to submit</Button>
+            </Link>) 
+            :
             (
               <Button type="submit" variant="contained" sx={{marginTop:"20px"}}>
                 Click to submit
               </Button>
             )
             } 
+
             
-            <div className="google-login">
-            <Login /> 
-            </div>
+            {/* <div className="google-login">
+              <Login clientId={this.props.clientId} setLogin={this.props.setLogin}/> 
+            </div> */}
             </form>
             
             </Grid>
@@ -173,6 +203,8 @@ class SignUp extends React.Component{
         );
       }
 }
+
+
 
 export default SignUp
 

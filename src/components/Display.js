@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid,Typography,Box,Card,CardContent } from "@mui/material";
+import { Grid,Typography,Box,Card,CardContent,Skeleton } from "@mui/material";
 import AddPagination from "./AddPagination";
 import {Link} from "react-router-dom"
 
@@ -48,7 +48,12 @@ class Display extends React.Component{
                                             <Typography>{game.title}</Typography>
                                             <a href={game.game_url}>Click to view the game</a>
                                         </Box>
-                                    ):null}
+                                    ):(
+                                        <Box sx={{ pt: 0.5 }}>
+                                            <Skeleton />
+                                            <Skeleton width="100%" />
+                                        </Box>
+                                    )}
                                 </div>
                                 </CardContent>
                                 </Card>
@@ -59,7 +64,7 @@ class Display extends React.Component{
                 </Grid>
             </div>
 
-            {finalItems[0] ?  
+            {result[0] ?  
             <div>
                 <AddPagination handlePagination={this.handlePagination} count={pagesCount} />
             </div> : null

@@ -54,7 +54,7 @@ class Filter extends React.Component{
           value={this.state.value}
           label="Filter"
           onChange={this.handleChange}
-          variant="outlined"
+          variant="outlined"    
         >
             {this.props.filterOptions.map((filter,index) => {return(
                 <MenuItem key={index} value={filter}>

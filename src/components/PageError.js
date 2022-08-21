@@ -6,7 +6,7 @@ const PageNotFound = () => {
     <div className="page-error">
       <h1>PAGE NOT FOUND</h1>
       <h3>The requested url is not found and it is invalid</h3>
-      <Link to="/">Click here to reach our home page</Link>
+      <Link to="/home">Click here to reach our home page</Link>
     </div>
   );
 };

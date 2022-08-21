@@ -1,27 +1,59 @@
-import React from "react";
-import {GoogleLogin} from "react-google-login";
+import React, { useState } from "react";
+import {GoogleLogin,GoogleLogout} from "react-google-login";
+import { useNavigate } from "react-router-dom";
 
-const clientId = "1055710802424-gsvuc291j0lopunlq8io2u3mqv8fn7p1.apps.googleusercontent.com";
+function Login({clientId,setGoogleLogin}){
 
-const onSuccess = (res) =>{
-    console.log("Login Success");
-}
+    const [showLoginButton,setShowLoginButton] = useState(true);
+    const [showLogoutButton,setShowLogoutButton] = useState(false);
 
-const onFailure = (res) =>{
-    console.log("login failed");
-}
+    const navigate = useNavigate();
+    const onLoginSuccess = (res) => {
+        localStorage.setItem("token",res.accessToken)
+        console.log("Login Success",res.profileObj);
+        setGoogleLogin(true)
+        setShowLoginButton(false)
+        setShowLogoutButton(true)
+        navigate("/home")
 
-function Login(){
+        
+    }
+
+    const onLoginFailure = (res) => {
+        console.log("Login Failed",res.profileObj);
+    }
+
+    const onSignOutSuccess = (res) => {
+        alert(`You have been signed out successfully`)
+        setGoogleLogin(false);
+        localStorage.removeItem("token");
+        setShowLoginButton(true)
+        setShowLogoutButton(false)
+        navigate("/");
+    }
+    
     return(
         <div>
-            <GoogleLogin
+            {showLoginButton ? (
+                <GoogleLogin
                 clientId={clientId}
-                buttonText={"Sign in with Google"}
-                onSuccess={onSuccess}
-                onFailure={onFailure}
+                buttonText="Sign in"
+                onSuccess={onLoginSuccess}
+                onFailure={onLoginFailure}
                 cookiePolicy={'single_host_origin'}
                 isSignedIn={true}
             />
+            ) : null}
+
+            {showLogoutButton ? (
+                 <GoogleLogout
+                 clientId={clientId}
+                 buttonText="Sign out"
+                 onLogoutSuccess={onSignOutSuccess}
+             />
+            ) : null}
+            
+           
         </div>
     )
 }

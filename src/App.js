@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{useState} from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Header from "./components/Header";
@@ -8,19 +8,22 @@ import "./components/main.css";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Details from "./components/Details";
 
-class App extends React.Component {
-  render() {
+function App(){
     const clientId = "1055710802424-gsvuc291j0lopunlq8io2u3mqv8fn7p1.apps.googleusercontent.com";
+    const [isLoggedIn,setLogin] = useState(false)
+    const [googleLogin,setGoogleLogin] = useState(false)
+
     return (
       <div>
         <ErrorBoundary>
           <BrowserRouter>
-            <Header />
+            <Header clientId={clientId} isLoggedIn={isLoggedIn} setLogin={setLogin} 
+            googleLogin={googleLogin} setGoogleLogin={setGoogleLogin}/>
 
             <Routes>
-                  <Route path="/signup" element={<SignUp clientId={clientId}/>} />
-              <Route path="/details/:id" element={<Details />} />
-              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/home/details/:id" element={<Details />} />
+              <Route path="/" element={<SignUp clientId={clientId} setLogin={setLogin}/>} />
               <Route path="/*" element={<PageNotFound />} />
             </Routes>
           </BrowserRouter>
@@ -28,6 +31,5 @@ class App extends React.Component {
       </div>
     );
   }
-}
 
 export default App;
