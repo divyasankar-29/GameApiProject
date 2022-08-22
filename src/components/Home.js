@@ -40,17 +40,18 @@ function Home(){
       if(response.data) {
         setLoading(false);
       }
-      else{
-        alert(`Could not fetch data!`)
-      }
     })
-    .catch((error) => console.log(error.name));
+    .catch((error) => {
+      console.log(error.name)
+      alert(`Could not fetch data`)
+    });
   },[])
 
   return (
     <div className="home_content">
+
       {isLoading ? 
-     (<p style={{align:"center"}}>Loading...</p>) :
+     (<p style={{marginLeft:"20%"}}>Loading...</p>) :
 
         /* <Search games={this.state.items} /> */
         (<div>

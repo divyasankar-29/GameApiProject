@@ -21,10 +21,7 @@ function Header({clientId,isLoggedIn,setLogin,googleLogin,setGoogleLogin}){
           </div>
         <div className="nav">
           {isLoggedIn ?
-          <>
           <Button variant = "contained" onClick={handleClick}>SignOut</Button>
-          {/* <Login clientId={clientId} setLogin={setLogin}/> */}
-          </>
            :
            <>
            <Link to="/">SignUp</Link> 
