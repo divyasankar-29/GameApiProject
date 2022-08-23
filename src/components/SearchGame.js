@@ -1,13 +1,10 @@
-import React ,{useEffect} from "react";
+import React ,{useEffect, useState} from "react";
 
-function SearchGame({query,setQuery,items,setFinalItems}){
+function SearchGame({query,setQuery,items,setFinalItems,filterValue}){
 
     useEffect(() => {
         setFinalItems([...items.filter((y) => 
-            (y.title.toLowerCase().includes(query) || 
-            y.developer.toLowerCase().includes(query) ||
-            y.publisher.toLowerCase().includes(query)))])
-
+            (y.title.toLowerCase().includes(query))&&(y.genre.includes(filterValue)))])
     },[query])
 
      

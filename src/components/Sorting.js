@@ -6,25 +6,17 @@ import { withStyles } from "@material-ui/core/styles";
 
 const styles = () => ({
     root:{
-        width : "300%",
+        width : "200px",
          height: "50px",
          border : "lightblue"
     }})
 
 class Sorting extends React.Component{
 
-  constructor(){
-    super();
-    this.state={
-      value:""
-    }
-  }
 
     handleChange=(e) => {
 
-      this.setState({
-        value:e.target.value
-      })
+      this.props.setSortValue(e.target.value)
         const options = {
             method: 'GET',
             url: 'https://free-to-play-games-database.p.rapidapi.com/api/games',
@@ -54,7 +46,7 @@ class Sorting extends React.Component{
         <Select
          labelId="select-label"
          id="demo-simple-select"
-          value={this.state.value}
+          value={this.props.sortValue}
           label="Filter"
           onChange={this.handleChange}
           variant="filled"

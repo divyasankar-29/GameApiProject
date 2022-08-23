@@ -23,22 +23,11 @@ function Header({clientId,isLoggedIn,setLogin,googleLogin,setGoogleLogin}){
           {isLoggedIn ?
           <Button variant = "contained" onClick={handleClick}>SignOut</Button>
            :
-           <>
            <Link to="/">SignUp</Link> 
-           {/* <Login clientId={clientId} setLogin={setLogin}/> */}
-           </>
           
           
           }
-          {/* <Login className="g-login" clientId={this.props.clientId}/>   */}
-
-          {googleLogin ? 
-          <>
           <Login clientId={clientId} setGoogleLogin={setGoogleLogin}/> 
-          </>
-           :
-            <Login clientId={clientId} setGoogleLogin={setGoogleLogin}/> 
-          }
         </div >
         
           

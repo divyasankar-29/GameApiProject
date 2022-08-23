@@ -11,70 +11,93 @@ class SignUp extends React.Component{
           firstname: "",
           lastname: "",
           gender: "",
-          mobileNumber: 0,
+          mobileNumber: "",
           emailid: "",
           password: "",
           invalid:{
-            firstname: "",
+            firstname: "",  
             lastname: "",
             mobileNumber:"",
             emailid:"",
             password: "",
           },
-          toggle:false
+          // toggle:false
         };
+
+        this.handleChange = this.handleChange.bind(this)
 
       }
     
       handleChange = (event) => {
         event.preventDefault();
 
+        console.log("@@@@@@")
+
         const {name,value} = event.target;
         let invalid = {...this.state.invalid}
 
-      if(value){
        switch(name){
           case "firstname":
-            invalid.firstname = value.length>3&& value.length<20&& (/^[a-zA-Z]+$/.test(value))? "":"Firstname should be alphabetic & 3-20 characters long "
+            invalid.firstname = (value.length>3 && value.length<20) && (/^[a-zA-Z]+$/.test(value))? 
+            "" : "Firstname should be alphabetic & 3-20 characters long"
 
           break;
 
           case "lastname":
-            invalid.lastname = value.length>3&& value.length<20 &&(/^[a-zA-Z]+$/.test(value))? "":"Lastname should be alphabetic & 3-20 characters long"
+            invalid.lastname = (value.length>3 && value.length<20) && (/^[a-zA-Z]+$/.test(value))?
+          "": "Lastname should be alphabetic & 3-20 characters long"
 
           break;
 
           case "emailid":
-            invalid.emailid = value.length>3 &&(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(value))? "":"Invalid email-id"
+            invalid.emailid = value.length>3 && (/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(value))?
+          "" : "Invalid email-id"
 
           break;
             
           case "mobileNumber":
-            invalid.mobileNumber = value.length===10 &&(/^[0-9]+$/.test(value))? "":"Enter a 10 digit number"
+            invalid.mobileNumber = value.length===10 && (/^[\+0-9]+$/.test(value))? 
+          "" : "Enter a 10 digit number"
 
           break;
 
           case "password":
-            invalid.password = value.length>=6 ? "":"Password should be 6 characters long"
+            invalid.password = value.length>=6 && (/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(value)) ?
+          "" : "Password should be 6 characters long with special characters,digits and uppercase letters"
 
           break;
 
           default : break;
         }
-      }
+
+        // if(this.state.invalid){
+        //   this.setState({
+        //     toggle : false
+        //   })
+        //   alert(`Enter correct details to submit`)
+        // }
+        // else{
+        //   this.setState({
+        //     toggle : true
+        //   })  
+        // }
+
         this.setState({
           [name] : value,
           invalid
         });
 
-        if(this.state.firstname && this.state.lastname && this.state.gender
-          && this.state.mobileNumber && this.state.emailid && this.state.password){
-          this.setState({
-            toggle : true
-          })
-        }
             
       };
+
+      handleClick=()=>{
+        this.props.setLogin(true)
+      }
+
+      invalidSubmit=(e)=>{
+        e.preventDefault();
+        alert(`Enter valid details to submit`)
+      }
   
       componentDidMount(){
         function start(){
@@ -86,9 +109,9 @@ class SignUp extends React.Component{
         gapi.load('client:auth2',start);
       }
 
-      handleClick(){
-        this.props.setSignIn(true)
-      };
+      // handleClick(){
+      //   this.props.setSignIn(true)
+      // };
 
       render(){
         
@@ -102,6 +125,7 @@ class SignUp extends React.Component{
               color="secondary" 
               variant="filled" 
               name="firstname" 
+              inputProps={{maxLength:20}}
               value={this.state.firstname}
               onChange = {this.handleChange}
               sx={{marginTop:"20px"}}
@@ -114,6 +138,7 @@ class SignUp extends React.Component{
               color="secondary" 
               variant="filled"
               name="lastname" 
+              inputProps={{maxLength:20}}
               value={this.state.lastname}
               onChange = {this.handleChange}
               sx={{marginTop:"30px"}}/>
@@ -160,10 +185,11 @@ class SignUp extends React.Component{
               
             {/* <Typography sx={{marginTop:"30px"}}> Mobile Number </Typography> */}
               <TextField required label="Mobile Number" 
-              type="phone"
+              type="text"
               color="secondary"
               variant="filled"
               name="mobileNumber" 
+              inputProps={{maxLength:10}}
               value={this.state.mobileNumber}
               onChange = {this.handleChange} 
               sx={{marginTop:"30px"}}/>
@@ -179,16 +205,18 @@ class SignUp extends React.Component{
               onChange = {this.handleChange}
               sx={{marginTop:"30px"}}/>
               <p style={{color:"red",fontSize:"small"}}>{this.state.invalid.password}</p>
-             {this.state.toggle?
-             (<Link to="/home">
-              <Button type="submit" variant="contained" onClick={this.props.setLogin(true)} sx={{marginTop:"20px"}}>Click to submit</Button>
-            </Link>) 
-            :
-            (
-              <Button type="submit" variant="contained" sx={{marginTop:"20px"}}>
+              
+
+             {this.state.invalid.firstname==="" && this.state.invalid.lastname==="" && this.state.invalid.emailid==="" 
+             && this.state.invalid.mobileNumber==="" && this.state.invalid.password==="" ?
+            
+              <Link to="/home">
+              <Button type="submit" variant="contained" onClick={this.handleClick} sx={{marginTop:"20px"}}>Click to submit</Button>
+             </Link>
+             :
+             <Button type="submit" onClick={this.invalidSubmit} variant="contained" sx={{marginTop:"20px"}}>
                 Click to submit
               </Button>
-            )
             } 
 
             

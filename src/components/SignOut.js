@@ -8,7 +8,7 @@ function SignOut(){
 
     const handleClick=()=>{
         //localStorage.clear();
-        // setLogin(false);
+        setLogin(false);
         nav("/");
     }
 

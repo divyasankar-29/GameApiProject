@@ -8,6 +8,8 @@ import "./components/main.css";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Details from "./components/Details";
 
+  console.log(process.env.REACT_APP_API_KEY);
+
 function App(){
     const clientId = "1055710802424-gsvuc291j0lopunlq8io2u3mqv8fn7p1.apps.googleusercontent.com";
     const [isLoggedIn,setLogin] = useState(false)

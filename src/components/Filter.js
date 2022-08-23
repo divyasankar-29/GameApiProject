@@ -3,15 +3,6 @@ import {FormControl,InputLabel,MenuItem,Select} from "@mui/material";
 import axios from "axios";
 
 class Filter extends React.Component{
-    constructor(props){
-        super(props)
-        this.state={
-            value:""
-        }
-
-        this.handleChange=this.handleChange.bind(this);
-    }
-    
     // handleChange(e){
     //     this.setState({
     //         value : e.target.value
@@ -20,23 +11,22 @@ class Filter extends React.Component{
     //     console.log(this.state.value);
     // }
 
-    handleChange(e){
+    handleChange =(e) =>{
         // this.props.setFinalItems(...this.props.items.filter(function(x){return(x.genre===this.state.value)}));
-        this.setState({
-            value : e.target.value
-        })
-        console.log("******",this.state.value);
+        this.props.setFilterValue(e.target.value)
+        console.log("******",this.props.filterValue);
         const options = {
             method: 'GET',
             url: 'https://free-to-play-games-database.p.rapidapi.com/api/games',
             params: {category: e.target.value},
             headers: {
-              'X-RapidAPI-Key': '179d14e898msh7881df0aca9ab89p19a136jsndcd8ac9ae786',
+              'X-RapidAPI-Key':  '179d14e898msh7881df0aca9ab89p19a136jsndcd8ac9ae786',
               'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com'
             }
           };
           
           axios.request(options).then((response) => {
+              console.log(response.data);
               this.props.setFinalItems((response.data));
           }).catch((error) => {
               console.error(error);
@@ -44,14 +34,14 @@ class Filter extends React.Component{
     }
         //   });
     render(){
-        console.log("****", this.state.value)
+        console.log("****", this.props.filterValue)
         return(
             <FormControl sx={{width:"20%",height:"50px"}}>
         <InputLabel id="demo-simple-select-label">Filter</InputLabel>
         <Select
          labelId="demo-simple-select-label"
          id="demo-simple-select"
-          value={this.state.value}
+          value={this.props.filterValue}
           label="Filter"
           onChange={this.handleChange}
           variant="outlined"    

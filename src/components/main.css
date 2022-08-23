@@ -83,7 +83,7 @@
   width: 50%;
   align-self:center;
   border-radius: 10px;
-  background-color:lightblue;
+  background-color:lightsteelblue;
   margin-left: 20%;
 }
 
@@ -112,9 +112,9 @@
     font-size: large;
   }
 
-  .developer > *{
-    margin-left: 25%;
+  .display > *{
     margin-top: 30px;
+    margin-left: 40%;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: large;
 

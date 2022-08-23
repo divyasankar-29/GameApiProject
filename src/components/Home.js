@@ -14,6 +14,8 @@ function Home(){
     const [items,setItems] = useState([]);
     const [finalItems,setFinalItems] = useState([]);
     const[isLoading,setLoading] =useState(true);
+    const[sortValue,setSortValue] = useState("");
+    const[filterValue,setFilterValue] = useState("");
   //   this.state = {
   //     query : "",
   //     items: [],
@@ -61,10 +63,11 @@ function Home(){
               setItems={setItems} 
               finalItems={finalItems} 
               setFinalItems={setFinalItems} 
+              filterValue={filterValue}
            />
            <Grid container wrap="wrap" justifyContent="center" spacing={2} sx={{marginTop:"10px"}} >
-           <Filter filterOptions={filterOptions} items= {items} setFinalItems={setFinalItems} />
-            <Sorting setFinalItems={setFinalItems}/>
+           <Filter filterValue={filterValue} setFilterValue={setFilterValue} filterOptions={filterOptions} items= {items} setFinalItems={setFinalItems} />
+            <Sorting sortValue={sortValue} setSortValue={setSortValue} setFinalItems={setFinalItems}/>
           </Grid>
           <br /><br />
           <Display finalItems = {finalItems} />

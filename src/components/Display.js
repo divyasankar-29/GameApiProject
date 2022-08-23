@@ -35,7 +35,7 @@ class Display extends React.Component{
                     {
                         finalItems[0]? result.map((game,index) => (
                             <Box key={index} sx={{width:400,marginRight:3,minHeight:300}}>
-                                <Card sx={{ mb: 2,backgroundColor:"lightblue"}}>
+                                <Card sx={{ mb: 2,backgroundColor:"lightsteelblue"}}>
                                 <CardContent>
                                 <div>
                                     {game ? (
